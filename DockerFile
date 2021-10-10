@@ -1,0 +1,17 @@
+FROM node:12.19.0-alpine3.9
+
+WORKDIR /lynx/src/nestjs-tutorial
+
+COPY package*.json ./
+
+RUN yarn add glob rimraf
+
+RUN yarn
+
+COPY . .
+
+RUN yarn build
+
+COPY ./lib ./
+CMD ["yarn", "start"]
+# ENTRYPOINT ["node", "lib/esm/src/main"]
