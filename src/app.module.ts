@@ -4,6 +4,7 @@ import { ConfigModule } from '@nestjs/config';
 import { DatabaseModule } from '@app/database';
 import { UserModule } from './user/user.module';
 import { RFPModule } from './RFP/RFP.module';
+import { AuthenticationModule } from './authentication/authentication.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -23,6 +24,7 @@ import { RFPModule } from './RFP/RFP.module';
         AWS_SECRET_ACCESS_KEY: Joi.string().required(),
       }),
     }),
+    AuthenticationModule,
     DatabaseModule,
     UserModule,
     RFPModule,

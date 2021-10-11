@@ -1,0 +1,3 @@
+{
+  "entities": ["lib/**/*.entity{.ts,.js}"]
+}

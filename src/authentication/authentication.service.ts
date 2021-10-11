@@ -23,7 +23,7 @@ export class AuthenticationService {
     const token = this.jwtService.sign(payload);
     return `Authentication=${token}; HttpOnly; Path=/; Max-Age=${this.configService.get(
       'JWT_EXPIRATION_TIME',
-    )}`;
+    )}s`;
   }
   public getCookieForLogOut() {
     return `Authentication=; HttpOnly; Path=/; Max-Age=0`;
@@ -36,8 +36,9 @@ export class AuthenticationService {
         ...registerationDto,
         password: hashedPassword,
       });
-      createdUser.password = undefined;
-      return createdUser;
+      const savedUser = await this.userRepository.save(createdUser);
+      savedUser.password = undefined;
+      return savedUser;
     } catch (e: any) {
       if (e?.code === PostgresErrorCode.UniqueViolation) {
         throw new HttpException(

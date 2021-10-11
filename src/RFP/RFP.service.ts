@@ -14,8 +14,9 @@ export class RFPService {
     private readonly rfpRepository: Repository<RFPEntity>,
   ) {}
 
-  createOne(createRFPDto: CreateRFPDto) {
-    return this.rfpRepository.create(createRFPDto);
+  async createOne(createRFPDto: CreateRFPDto) {
+    const created = this.rfpRepository.create(createRFPDto);
+    return this.rfpRepository.save(created);
   }
   async findOne(findOneOptions: FindOneOptions<RFPEntity>) {
     const rfp = await this.rfpRepository.findOne(findOneOptions);
@@ -26,7 +27,7 @@ export class RFPService {
     return this.rfpRepository.find(findOptions);
   }
   async replace(
-    findOneOptions: FindOneOptions<RFPEntity>,
+    findOneOptions: FindOneOptions<RFPEntity> = {},
     data: QueryDeepPartialEntity<UpdateRFPDto>,
   ) {
     const rfp = await this.findOne(findOneOptions);
