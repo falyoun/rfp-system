@@ -2,7 +2,6 @@ import {
   Body,
   Controller,
   Get,
-  HttpCode,
   Post,
   Req,
   Res,
@@ -23,16 +22,14 @@ export class AuthenticationController {
     return this.authenticationService.register(registrationDto);
   }
 
-  @HttpCode(200)
   @UseGuards(LocalAuthenticationGuard)
   @Post('login')
   async login(@Req() req: RequestWithUserInterface) {
     const { user } = req;
-    console.log('user: ', user);
     const cookie = this.authenticationService.getCookieWithJwtToken(user.id);
     req.res.setHeader('Set-Cookie', cookie);
     user.password = undefined;
-    return req.res.send(user);
+    req.res.status(200).json(user);
   }
 
   @UseGuards(JwtAuthenticationGuard)

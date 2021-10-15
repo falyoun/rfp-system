@@ -1,0 +1,9 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "declaration": true,
+    "outDir": "../../lib/libs/file-upload"
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist", "lib", "test", "**/*spec.ts"]
+}

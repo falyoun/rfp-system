@@ -70,11 +70,15 @@ export class AuthenticationService {
   }
   async authenticateUser({ email, password }: AuthenticateUserDto) {
     try {
-      const user = await this.userRepository.findOne({ email });
+      const user = await this.userRepository.findOne({
+        where: { email: email },
+        select: ['password', 'email', 'id', 'avatar'],
+      });
       await this._verifyPassword(password, user.password);
       user.password = undefined;
       return user;
     } catch (error) {
+      console.log(error);
       throw new HttpException(
         UserErrors.WRONG_CREDENTIALS,
         HttpStatus.BAD_REQUEST,

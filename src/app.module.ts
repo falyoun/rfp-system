@@ -5,6 +5,7 @@ import { DatabaseModule } from '@app/database';
 import { UserModule } from './user/user.module';
 import { RFPModule } from './RFP/RFP.module';
 import { AuthenticationModule } from './authentication/authentication.module';
+import { FileUploadModule } from '../shared/file-upload/src';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -22,8 +23,10 @@ import { AuthenticationModule } from './authentication/authentication.module';
         AWS_REGION: Joi.string().required(),
         AWS_ACCESS_KEY_ID: Joi.string().required(),
         AWS_SECRET_ACCESS_KEY: Joi.string().required(),
+        AWS_PUBLIC_BUCKET_NAME: Joi.string().required(),
       }),
     }),
+    FileUploadModule,
     AuthenticationModule,
     DatabaseModule,
     UserModule,
